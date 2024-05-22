@@ -1,0 +1,145 @@
+---
+title: "Carga de datos"
+author: "C"
+date: "2024-05-21"
+output: html_document
+---
+
+# Carga de librerías
+```{r, include=FALSE}
+# Por si no se tiene descargado
+#install.packages("insuranceData")
+
+library(dplyr)
+library(ggplot2)
+library(insuranceData)
+
+```
+
+
+# Carga de bases
+```{r}
+data("AutoBi")
+```
+
+
+```{r}
+AutoBi<-na.omit(AutoBi)
+```
+
+
+```{r}
+ggplot(AutoBi, aes(x = factor(ATTORNEY))) +
+  geom_bar(fill = "skyblue", color = "skyblue") +
+  scale_x_discrete(labels = c("1" = "Con representación", "2" = "Sin representación")) +
+  labs(title = "Distribución de Representación Legal",
+       x = "Representación Legal",
+       y = "Frecuencia") +
+  theme_minimal()+
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black")
+```
+
+```{r}
+ggplot(AutoBi, aes(x = factor(CLMSEX))) +
+  geom_bar(fill = "skyblue", color = "skyblue") +
+  scale_x_discrete(labels = c("1" = "Masculino", "2" = "Femenino")) +
+  labs(title = "Distribución del Sexo de los Reclamantes",
+       x = "Sexo",
+       y = "Frecuencia") +
+  theme_minimal()+
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black")
+```
+
+```{r}
+ggplot(AutoBi, aes(x = factor(MARITAL))) +
+  geom_bar(fill = "skyblue", color = "skyblue") +
+  scale_x_discrete(labels = c("1" = "Casado", "2" = "Soltero", "3" = "Viudo", "4" = "Divorciado")) +
+  labs(title = "Distribución del Estado Civil de los Reclamantes",
+       x = "Estado Civil",
+       y = "Frecuencia") +
+  theme_minimal()+
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black")
+```
+
+```{r}
+ggplot(AutoBi, aes(x = factor(CLMINSUR))) +
+  geom_bar(fill = "skyblue", color = "skyblue") +
+  scale_x_discrete(labels = c("1" = "Asegurado", "2" = "No Asegurado", "3" = "No Aplica")) +
+  labs(title = "Distribución de Condición de Seguro de los Reclamantes",
+       x = "Condición de Seguro",
+       y = "Frecuencia") +
+  theme_minimal()+
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black")
+```
+
+```{r}
+ggplot(AutoBi, aes(x = factor(SEATBELT))) +
+  geom_bar(fill = "skyblue", color = "skyblue") +
+  scale_x_discrete(labels = c("1" = "Sí Usaba", "2" = "No Usaba", "3" = "No Aplica")) +
+  labs(title = "Distribución de Uso de Sistemas de Seguridad",
+       x = "Condición de Seguro",
+       y = "Frecuencia") +
+  theme_minimal()+
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, color = "black")
+```
+
+```{r}
+media <- mean(AutoBi$CLMAGE, na.rm = TRUE)
+varianza <- var(AutoBi$CLMAGE, na.rm = TRUE)
+minimo <- min(AutoBi$CLMAGE, na.rm = TRUE)
+maximo <- max(AutoBi$CLMAGE, na.rm = TRUE)
+cuantiles <- quantile(AutoBi$CLMAGE, na.rm = TRUE)
+
+# Mostrando los resultados
+cat("Media:", media, "\n")
+cat("Varianza:", varianza, "\n")
+cat("Mínimo:", minimo, "\n")
+cat("Máximo:", maximo, "\n")
+cat("Cuantiles:", "\n")
+print(cuantiles)
+str(AutoBi$CLMAGE)
+summary(AutoBi$CLMAGE)
+ggplot(AutoBi, aes(x = CLMAGE)) +
+  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  labs(title = "Histograma de CLMAGE",
+       x = "CLMAGE",
+       y = "Frecuencia") +
+  theme_minimal()
+
+ggplot(AutoBi, aes(y = CLMAGE)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(title = "Boxplot de CLMAGE",
+       y = "CLMAGE") +
+  theme_minimal()
+```
+
+```{r}
+media <- mean(AutoBi$LOSS, na.rm = TRUE)
+varianza <- var(AutoBi$LOSS, na.rm = TRUE)
+minimo <- min(AutoBi$LOSS, na.rm = TRUE)
+maximo <- max(AutoBi$LOSS, na.rm = TRUE)
+cuantiles <- quantile(AutoBi$LOSS, na.rm = TRUE)
+
+# Mostrando los resultados
+cat("Media:", media, "\n")
+cat("Varianza:", varianza, "\n")
+cat("Mínimo:", minimo, "\n")
+cat("Máximo:", maximo, "\n")
+cat("Cuantiles:", "\n")
+print(cuantiles)
+str(AutoBi$LOSS)
+summary(AutoBi$LOSS)
+ggplot(AutoBi, aes(x = LOSS)) +
+  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  labs(title = "Histograma de LOSS",
+       x = "LOSS",
+       y = "Frecuencia") +
+  theme_minimal()
+
+ggplot(AutoBi, aes(y = LOSS)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(title = "Boxplot de LOSS",
+       y = "LOSS") +
+  theme_minimal()
+```
+
